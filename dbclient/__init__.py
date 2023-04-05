@@ -23,14 +23,15 @@ class Directory:
         # Determine of item is a file or directory
         all_items = os.listdir(self.path)
         all_files = [
-            name.strip(".json") for name in all_items if name.endswith(".json")
+            name.replace(".json", "") for name in all_items if name.endswith(".json")
         ]
+
 
         # TODO: The system of checking if the target is a file is a rushed and cheeky
         # It's purpose it to allow users to enter the entry name with out having to add the .json suffix
 
         if item in all_files:
-            return File(os.path.join(self.path, item.strip(".json") + ".json"))
+            return File(os.path.join(self.path, item.replace(".json", "") + ".json"))
         else:
             return Directory(os.path.join(self.path, item))
 
@@ -44,7 +45,7 @@ class Directory:
             ]
             if item not in all_folders:
                 with open(
-                    os.path.join(self.path, item.strip(".json") + ".json"), "w"
+                    os.path.join(self.path, item.replace(".json", "") + ".json"), "w"
                 ) as file:
                     json.dump(value, file)
 
